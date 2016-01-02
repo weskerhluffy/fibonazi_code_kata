@@ -48,18 +48,33 @@ def fibonazzzi(numero, repulsivo=False):
 #            fibonazzzi.fibonazis = [None for _ in range(numero + 1)]
             fibonazzzi.fibonazis = array.array("l", [1, 1])
         
-        if(numero > 1):
-            print("iterando para calcular fibo de %d" % numero)
-            for numero_actual in range(2, numero + 1):
-                if(len(fibonazzzi.fibonazis) <= numero_actual):
-                    resultado = fibonazzzi.fibonazis[numero_actual - 1] + fibonazzzi.fibonazis[numero_actual - 2]
-                    print("el fbo de %d es %d" % (numero_actual, resultado))
-                    fibonazzzi.fibonazis.append(resultado)
+        print("iterando para calcular fibo de %d" % numero)
+        for numero_actual in range(numero + 1):
+            if(len(fibonazzzi.fibonazis) <= numero_actual):
+                resultado = fibonazzzi.fibonazis[numero_actual - 1] + fibonazzzi.fibonazis[numero_actual - 2]
+                print("el fbo de %d es %d" % (numero_actual, resultado))
+                fibonazzzi.fibonazis.append(resultado)
+            resultado = fibonazzzi.fibonazis[numero_actual]
             
         print("los numerillos son %s" % fibonazzzi.fibonazis)
-        resultado = fibonazzzi.fibonazis[numero]
         
     return resultado
+    
+def fibonazzzi_gen(numero):
+    numero_actual = 0
+    fibo_ant_1 = fibo_ant_2 = 1
+    fibo_act = 0
+    
+    for numero_actual in range(numero + 1):
+        if(numero_actual == 0 or numero_actual == 1):
+            fibo_act = fibo_ant_1
+        else:
+            fibo_act = fibo_ant_1 + fibo_ant_2
+            fibo_ant_2 = fibo_ant_1
+            fibo_ant_1 = fibo_act
+        
+        yield fibo_act
+    
 
 def p_decorate(func):
     print("pero la puta madre")
@@ -99,5 +114,6 @@ if __name__ == '__main__':
     caca = fibonazzzi(5, repulsivo=True)
     print("la mort %d" % caca)
     
+    print("los fibonazis gen son %s" % [x for x in fibonazzzi_gen(110)])
 
-    print(get_text("John"))
+    
